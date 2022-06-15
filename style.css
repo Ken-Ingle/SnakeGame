@@ -1,4 +1,26 @@
 body {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  
+}
+
+#grid {
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  border-style: solid;
+  background-color: lightgray;
+}
+
+#grid div {
+  width: 30px;
+  height: 30px;
+  font-size: x-small;
+}
+
+.snake { 
+  background-color: blue;
+}
+
+.apple {
+  background-color: red
 }
