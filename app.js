@@ -10,7 +10,7 @@ const MOVE_UP = -width;
 const MOVE_DOWN = width;
 
 let gridSquares = [];
-let snakePos;
+let snake = [];
 let currentDirection;
 let intervalTime = 500;
 let tickInterval;
@@ -27,37 +27,46 @@ function endGame(message) {
   clearInterval(tickInterval);
 }
 
+function moveSnake() {
+  const tailIndex = snake.pop();
+  gridSquares[tailIndex].classList.remove('snake');
+  const newHeadIndex = snake[0] + currentDirection
+  snake.unshift(newHeadIndex);  
+  gridSquares[newHeadIndex].classList.add('snake');
+}
+
 function onGameTick() {
   // hit bottom wall
-  if (snakePos + currentDirection >= (width*width) && currentDirection == MOVE_DOWN) {
+  if (snake[0] + currentDirection >= (width*width) && currentDirection == MOVE_DOWN) {
     endGame("You hit the bottom of the screen");
     return;
   }
 
   // hit top wall 
-  if (snakePos + currentDirection < 0 && currentDirection == MOVE_UP) {
+  if (snake[0] + currentDirection < 0 && currentDirection == MOVE_UP) {
     endGame("You hit the top of the screen");
     return;
   }
 
-  if (snakePos % width === 0 && currentDirection === MOVE_LEFT) {
+  if (snake[0] % width === 0 && currentDirection === MOVE_LEFT) {
     endGame("You hit the left of the screen");
     return;
   }
 
-  if (snakePos % width === width - 1 && currentDirection === MOVE_RIGHT) {
+  if (snake[0] % width === width - 1 && currentDirection === MOVE_RIGHT) {
     endGame("You hit the right of the screen");
     return;
   }
 
-  gridSquares[snakePos].classList.remove('snake');
-  snakePos = snakePos + currentDirection;
-  gridSquares[snakePos].classList.add('snake');  
+  moveSnake();
 }
 
 function startGame() {
-  snakePos = 209;
+  snake = [66, 65, 64, 63, 62, 61, 60];
   currentDirection = MOVE_RIGHT;
+  snake.forEach(index => {
+    gridSquares[index].classList.add('snake');
+  })
   tickInterval = setInterval(onGameTick, intervalTime);
 }
 
