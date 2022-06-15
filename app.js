@@ -48,13 +48,21 @@ function onGameTick() {
     return;
   }
 
+  // hit left wall
   if (snake[0] % width === 0 && currentDirection === MOVE_LEFT) {
     endGame("You hit the left of the screen");
     return;
   }
 
+  // hit right wall
   if (snake[0] % width === width - 1 && currentDirection === MOVE_RIGHT) {
     endGame("You hit the right of the screen");
+    return;
+  }
+
+  // snake hit itself
+  if (gridSquares[snake[0] + currentDirection].classList.contains('snake')) {
+    endGame("You hit yourself");
     return;
   }
 
@@ -62,6 +70,7 @@ function onGameTick() {
 }
 
 function startGame() {
+  snake.forEach(index => gridSquares[index].classList.remove('snake'));
   snake = [66, 65, 64, 63, 62, 61, 60];
   currentDirection = MOVE_RIGHT;
   snake.forEach(index => {
