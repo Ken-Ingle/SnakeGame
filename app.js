@@ -19,7 +19,6 @@ for (let i = 0; i < width * width; i++) {
   const newDiv = document.createElement('div');
   gridDiv.appendChild(newDiv);
   gridSquares.push(newDiv);
-  newDiv.innerText = i;
 }
 
 function endGame(message) {
@@ -42,14 +41,23 @@ function moveSnake() {
     gridSquares[tailIndex].classList.add('snake');
     snake.push(tailIndex);
 
+    intervalTime -= 100;
+    messageDisplay.innerText = "Time is " + intervalTime;
+
     placeApple();
     score++;
+    clearInterval(tickInterval);
+    tickInterval = setInterval(onGameTick, intervalTime);
     scoreDisplay.innerText = score;
   }
 }
 
 function placeApple() {
-  const appleIndex = Math.floor(Math.random() * width*width);
+  let appleIndex;
+  do {
+    appleIndex = Math.floor(Math.random() * width*width);
+  } while(gridSquares[appleIndex].classList.contains('snake'));
+  
   gridSquares[appleIndex].classList.add('apple');
 }
 
@@ -89,6 +97,7 @@ function onGameTick() {
 
 function startGame() {
   snake.forEach(index => gridSquares[index].classList.remove('snake'));
+  gridSquares.forEach(square => square.classList.remove('apple'));
   snake = [66, 65, 64, 63, 62, 61, 60];
   currentDirection = MOVE_RIGHT;
   snake.forEach(index => {
