@@ -33,6 +33,24 @@ function moveSnake() {
   const newHeadIndex = snake[0] + currentDirection
   snake.unshift(newHeadIndex);  
   gridSquares[newHeadIndex].classList.add('snake');
+
+  // got the apple
+  if (gridSquares[newHeadIndex].classList.contains('apple')) {
+    gridSquares[newHeadIndex].classList.remove('apple');
+
+    // grow the snake
+    gridSquares[tailIndex].classList.add('snake');
+    snake.push(tailIndex);
+
+    placeApple();
+    score++;
+    scoreDisplay.innerText = score;
+  }
+}
+
+function placeApple() {
+  const appleIndex = Math.floor(Math.random() * width*width);
+  gridSquares[appleIndex].classList.add('apple');
 }
 
 function onGameTick() {
@@ -76,6 +94,7 @@ function startGame() {
   snake.forEach(index => {
     gridSquares[index].classList.add('snake');
   })
+  placeApple();
   tickInterval = setInterval(onGameTick, intervalTime);
 }
 
