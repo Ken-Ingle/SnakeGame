@@ -107,6 +107,7 @@ function startGame() {
   tickInterval = setInterval(onGameTick, intervalTime);
 }
 
+
 function onKeyClick(ev) {
   if (ev.code === 'ArrowUp') {
     currentDirection = MOVE_UP;
