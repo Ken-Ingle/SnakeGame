@@ -1,6 +1,7 @@
 const startButton = document.getElementById('startButton');
 const scoreDisplay = document.getElementById('scoreDisplay');
 const messageDisplay = document.getElementById('messageDisplay');
+const highScoreDisplay = document.getElementById('highScoreDisplay');
 const gridDiv = document.getElementById('grid');
 
 const width = 20;
@@ -8,8 +9,29 @@ const MOVE_RIGHT = 1;
 const MOVE_LEFT = -1;
 const MOVE_UP = -width;
 const MOVE_DOWN = width;
+const API_URL = "http://localhost:3000/ken/score";
+let highScore = 0;
+
+async function saveScore(score) {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": 'application/json'          
+    },
+    body: JSON.stringify({
+      score: score
+    })
+  });
+}
+
+async function getScore() {
+  const response = await fetch(API_URL);
+  const results = await response.json();
+  return results.score;
+}
 
 let gridSquares = [];
+let score = 0;
 let snake = [];
 let currentDirection;
 let intervalTime = 500;
@@ -49,6 +71,12 @@ function moveSnake() {
     clearInterval(tickInterval);
     tickInterval = setInterval(onGameTick, intervalTime);
     scoreDisplay.innerText = score;
+
+    if (score > highScore) {
+      highScore = score;
+      saveScore(highScore);
+      highScoreDisplay.innerText = highScore;
+    }
   }
 }
 
@@ -96,6 +124,7 @@ function onGameTick() {
 }
 
 function startGame() {
+  score = 0;
   snake.forEach(index => gridSquares[index].classList.remove('snake'));
   gridSquares.forEach(square => square.classList.remove('apple'));
   snake = [66, 65, 64, 63, 62, 61, 60];
@@ -105,6 +134,11 @@ function startGame() {
   })
   placeApple();
   tickInterval = setInterval(onGameTick, intervalTime);
+
+  getScore().then(result => {
+    highScore = result;
+    highScoreDisplay.innerText = highScore;
+  });
 }
 
 

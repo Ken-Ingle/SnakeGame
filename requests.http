@@ -1,36 +1,21 @@
 
 
+### ------------------------------------
+GET http://localhost:3000
 
+### ------------------------------------
+GET http://localhost:3000/example
+Content-Type: application/json
 
-### -----------------------------------------------------------------
-POST https://getpantry.cloud/apiv1/pantry/2f34cdb9-92ab-4b0d-8bb2-43eed036c2dc/basket/ken-score
+### ------------------------------------
+GET http://localhost:3000/example/test
+Content-Type: application/json
 
-
-### -----------------------------------------------------------------
-GET https://getpantry.cloud/apiv1/pantry/2f34cdb9-92ab-4b0d-8bb2-43eed036c2dc/basket/ken-score
-
-### -----------------------------------------------------------------
-POST https://getpantry.cloud/apiv1/pantry/2f34cdb9-92ab-4b0d-8bb2-43eed036c2dc/basket/ken-score
-content-type: application/json
-
-{
-  "user": "gavin",
-  "highScore": "1",
-  "date": "6/20/2022"
-}
-
-### -----------------------------------------------------------------
-PUT https://getpantry.cloud/apiv1/pantry/2f34cdb9-92ab-4b0d-8bb2-43eed036c2dc/basket/ken-score
-content-type: application/json
+### ------------------------------------
+POST  http://localhost:3000/example/score
+Content-Type: application/json
 
 {
-  "user": "gavin",
-  "highScore": "2",
-  "date": "6/20/2022"
+  "User": "Example User",
+  "highScore": 10
 }
-
-
-
-### -----------------------------------------------------------------
-DELETE https://getpantry.cloud/apiv1/pantry/2f34cdb9-92ab-4b0d-8bb2-43eed036c2dc/basket/ken-score
-
