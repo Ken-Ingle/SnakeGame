@@ -2,6 +2,7 @@ const startButton = document.getElementById('startButton');
 const scoreDisplay = document.getElementById('scoreDisplay');
 const messageDisplay = document.getElementById('messageDisplay');
 const gridDiv = document.getElementById('grid');
+const highScoreDisplay = document.getElementById('highScoreDisplay')
 
 const width = 20;
 const MOVE_RIGHT = 1;
@@ -14,6 +15,7 @@ let snake = [];
 let currentDirection;
 let intervalTime = 500;
 let tickInterval;
+let highScore = 0;
 
 for (let i = 0; i < width * width; i++) {
   const newDiv = document.createElement('div');
@@ -49,6 +51,11 @@ function moveSnake() {
     clearInterval(tickInterval);
     tickInterval = setInterval(onGameTick, intervalTime);
     scoreDisplay.innerText = score;
+
+    if (score > highScore) {
+      highScore = score;
+      highScoreDisplay.innerText = highScore;
+    }
   }
 }
 
@@ -105,6 +112,7 @@ function startGame() {
   })
   placeApple();
   tickInterval = setInterval(onGameTick, intervalTime);
+  highScoreDisplay.innerText = highScore;
 }
 
 function onKeyClick(ev) {
